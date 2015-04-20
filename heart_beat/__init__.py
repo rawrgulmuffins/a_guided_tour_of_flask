@@ -14,6 +14,7 @@ app.config.from_pyfile("development_config.py", silent=False)
 
 # global SQLAlchemy configuration
 db = SQLAlchemy(app)
+db.create_all()
 
 #Create and register all static asset bundles.
 #register_all(app)
