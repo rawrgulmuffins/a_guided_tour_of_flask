@@ -16,3 +16,4 @@ class DiagnosticPingData(db.Model):
     one_fs_version = db.Column(db.String(24), nullable=False)
     esrs_enabled = db.Column(db.Boolean, nullable=False)
     tool_version = db.Column(db.String(24), nullable=False)
+    sr_number = db.Column(db.Integer(14), nullable=False)
