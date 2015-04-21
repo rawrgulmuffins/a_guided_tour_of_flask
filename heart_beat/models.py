@@ -86,6 +86,18 @@ class DiagnosticPingData(db.Model):
         self.tool_version=tool_version
         self.sr_number=sr_number
 
+    def get_dict(self):
+        return_dict = {}
+        return_dict["ping_id"] = self.ping_id
+        return_dict["db_insert_time"] = str(self.db_insert_time)
+        return_dict["client_start_time"] = str(self.client_start_time)
+        return_dict["logset_gather_time"] = str(self.logset_gather_time)
+        return_dict["onefs_version"] = self.onefs_version
+        return_dict["esrs_enabled"] = self.esrs_enabled
+        return_dict["tool_version"] = self.tool_version
+        return_dict["sr_number"] = self.sr_number
+        return return_dict
+
     def __repr__(self):
         """
         Returns all of the internal attribute values of the DiagnosticPingData

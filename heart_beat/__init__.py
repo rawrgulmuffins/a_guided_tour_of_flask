@@ -1,6 +1,8 @@
 """
+Holds all configs and app level constructs. If you'd like to add something that
+affects the app object for the entire application it should happen in this
+file.
 """
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
