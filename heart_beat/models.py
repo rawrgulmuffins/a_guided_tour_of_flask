@@ -1,6 +1,8 @@
 import datetime
 
+from . import exceptions
 from . import db
+from . import app
 
 
 class DiagnosticPingData(db.Model):
@@ -48,15 +50,34 @@ class DiagnosticPingData(db.Model):
             tool_version=None,
             sr_number=None,):
 
-        client_start_epoch_time = int(client_start_time)
-        logset_gather_epoch_time = int(logset_gather_time)
-        esrs_enabled = bool(esrs_enabled)
+        try:
+            client_start_epoch_time = int(client_start_time)
+            logset_gather_epoch_time = int(logset_gather_time)
+        except ValueError:
+            raise exceptions.NonUnixTimestamp()
 
 
         ISO_8601_client = datetime.datetime.utcfromtimestamp(
             client_start_epoch_time)
         ISO_8601_gather = datetime.datetime.utcfromtimestamp(
             logset_gather_epoch_time)
+
+        if tool_version != app.config["VERSION"]:
+            raise exceptions.VersionMismatch()
+
+        # bool("not a bool") returns True, not useful as a test.
+        if esrs_enabled.lower() == "true":
+            esrs_enabled = True
+        elif esrs_enabled.lower() == "false":
+            esrs_enabled = False
+        else:
+            raise exceptions.ESRSNotBool()
+
+        try:
+            sr_number = int(sr_number)
+        except ValueError:
+            raise exceptions.SRNumberNotInt()
+
 
         self.client_start_time=ISO_8601_client
         self.logset_gather_time=ISO_8601_gather

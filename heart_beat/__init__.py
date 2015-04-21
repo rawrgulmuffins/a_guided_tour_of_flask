@@ -11,7 +11,10 @@ app = Flask(__name__, static_url_path='/static')
 # the environment variable LIMBO_SETTINGS is set in runserver, run_unit_tests
 # or limbo.wsgi.
 
-app.config.from_pyfile("development_config.py", silent=False)
+def load_configs():
+    app.config.from_pyfile("development_config.py", silent=False)
+
+load_configs()
 
 # global SQLAlchemy configuration
 db = SQLAlchemy(app)

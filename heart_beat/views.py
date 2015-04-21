@@ -11,6 +11,8 @@ from flask import request
 from . import app
 from . import db
 from . import models
+from . import exceptions as ex
+
 
 def insert_ping_data(posted_json):
     """
@@ -20,6 +22,9 @@ def insert_ping_data(posted_json):
     If we have all known keys and they're populated with data we may
     still run into an Error in DiagnosticPingData if the string data
     can't be converted to the expected data types.
+
+    NOTE: DiagnosticPingData can raise VersionMismatch, NonUnixTimestamp,
+        ESRSNotBool, and SRNumberNotInt
     """
     new_ping_row = models.DiagnosticPingData(**posted_json)
     db.session.add(new_ping_row)
@@ -50,8 +55,9 @@ def ping():
 
     status code 200 is returned if valid data is passed and was able to be
         inserted into the db.
-    Status code 400 is returned in four separate cases. No JSON data, Null JSON
-        data, JSON data is missing keys, JSON data contains Nulls.
+    Status code 400 is returned in many different cases. It's a catch all for
+        data which is malformed. Each 400 comes with a custom error message
+        which contains exact details.
     Status code 405 is anything put POST is used as the method.
     Status code 406 is used if any content-type is used other than
         application/json.
@@ -79,8 +85,21 @@ def ping():
     # view level.
     if all(key in posted_json for key in json_keys):
         if None not in posted_json.values():
-            insert_ping_data(posted_json)
-            return "", 200
+            try:
+                insert_ping_data(posted_json)
+            except ex.VersionMismatch:
+                except_msg = ("Server version ({}) is not client version "
+                    "({})").format(
+                        posted_json.get("tool_version"),
+                        app.config["VERSION"])
+                return except_msg, 400
+            except ex.NonUnixTimestamp:
+                return "Given Non-unix timestamps", 400
+            except ex.ESRSNotBool:
+                return "esrs_enabled not a bool", 400
+            except ex.SRNumberNotInt:
+                return "sr_number is not a integer", 400
+            return "success", 200
         else:
             # No db columns can be null. See models.py for more details.
             return "JSON data contains Nulls", 400
