@@ -1,8 +1,13 @@
 """
-This file starts a limbo application and servers limbo on this machines current
-address on port 80
+DO NOT USE THIS FILE TO RUN A PRODUCTION SERVER. THIS IS IN ALL CAP'S FOR A
+REASON AND YOU SHOULD LISTEN.
 
-NOTE: This test server is not meant for production.
+If you use runserver.py to run in a production environment you will be running
+this flask application using python.SimpleHTTPServer (which is about as
+fast as a turtle dragging an sports car) and more importantly you will be
+deploying code which comes with network facing arbitrary code execution built
+in by design. The flask dev server is wonderful for proof of convent and dev
+work but is absolutely not ok for production use.
 """
 from heart_beat import app
 
