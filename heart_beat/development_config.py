@@ -1,7 +1,7 @@
 
 """ -------------------------- DATA BASE CONFINGURATION --------------------"""
 SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
-SQLALCHEMY_ECHO = False
+SQLALCHEMY_ECHO = True
 
 
 """ -------------------------- Flask Application Config --------------------"""

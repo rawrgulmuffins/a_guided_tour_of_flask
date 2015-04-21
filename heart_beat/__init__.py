@@ -14,10 +14,10 @@ app.config.from_pyfile("development_config.py", silent=False)
 
 # global SQLAlchemy configuration
 db = SQLAlchemy(app)
-db.create_all()
 
 #Create and register all static asset bundles.
 #register_all(app)
 
 #NOTE: DON'T LISTEN TO YOUR IDE! limbo.views is used and required.
 import heart_beat.views  # views contains all URL routes, Importing sets routes.
+db.create_all()

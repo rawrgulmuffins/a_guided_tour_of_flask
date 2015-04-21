@@ -50,6 +50,8 @@ class DiagnosticPingData(db.Model):
 
         client_start_epoch_time = int(client_start_time)
         logset_gather_epoch_time = int(logset_gather_time)
+        esrs_enabled = bool(esrs_enabled)
+
 
         ISO_8601_client = datetime.datetime.utcfromtimestamp(
             client_start_epoch_time)
