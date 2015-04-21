@@ -10,6 +10,7 @@ import os
 import tempfile
 import uuid
 import unittest
+import json
 from unittest import mock
 
 import heart_beat
@@ -39,13 +40,31 @@ class TestURLMapping(unittest.TestCase):
         self.assertEqual(response.data, heart_beat.app.config['VERSION'])
 
     def test_ping_fails_on_get_request(self):
-        pass
+        response = self.test_app.get('/ping', content_type='html/text')
+        self.assertEqual(response.status_code, 405)
 
     def test_ping_post_request_bad_content_type(self):
-        pass
+        response = self.test_app.post('/ping', content_type='html/text')
+        self.assertEqual(response.status_code, 406)
 
-    def test_ping_post_request_bad_correct_content_type(self):
-        pass
+    def test_ping_post_request_correct_content_type_no_json(self):
+        response = self.test_app.post('/ping', content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_ping_post_valid_content_type_valid_data(self):
+        example_json_data = {
+            "client_start_time":"1429572087",
+            "logset_gather_time":"1429572066",
+            "onefs_version":"7.2.0.0",
+            "esrs_enabled":"False",
+            "tool_version":"0.0.0.1",
+            "sr_number":"12345678910"}
+        example_json_data = json.dumps(example_json_data)
+        response = self.test_app.post(
+            '/ping',
+            content_type='application/json',
+            data=example_json_data)
+        self.assertEqual(response.status_code, 200)
 
 class TestPostData(unittest.TestCase):
     """
@@ -61,8 +80,6 @@ class TestPostData(unittest.TestCase):
     def tearDown(self):
         heart_beat.teardown_db()
 
-    def test_ping_post_valid_data(self):
-        pass
 
     def test_ping_post_mismatched_tool_version_data(self):
         pass
