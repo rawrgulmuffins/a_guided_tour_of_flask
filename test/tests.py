@@ -19,25 +19,32 @@ class TestURLMapping(unittest.TestCase):
     Ensure that we have the correct get and post end points.
     """
     def setUp(self):
+        # Putting things in tmp couples this project to Unix.
         db_uri = 'sqlite:////tmp/{}'.format(uuid.uuid1())
         heart_beat.app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
         heart_beat.app.config['TESTING'] = True
-        self.app = heart_beat.app.test_client()
-        heart_beat.init_db()
+        self.test_app = heart_beat.app.test_client()
+        heart_beat.setup_db()
 
     def tearDown(self):
-        heart_beat.tear_down_db()
+        heart_beat.teardown_db()
 
-    def test_version_get_request():
+    def test_version_get_request(self):
+        response = self.test_app.get('/version', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    def test_version_returns_configured_version(self):
+        heart_beat.app.config['VERSION'] = b'Testing'
+        response = self.test_app.get('/version', content_type='html/text')
+        self.assertEqual(response.data, heart_beat.app.config['VERSION'])
+
+    def test_ping_fails_on_get_request(self):
         pass
 
-    def test_ping_fails_on_get_request():
+    def test_ping_post_request_bad_content_type(self):
         pass
 
-    def test_ping_post_request_bad_content_type():
-        pass
-
-    def test_ping_post_request_bad_correct_content_type():
+    def test_ping_post_request_bad_correct_content_type(self):
         pass
 
 class TestPostData(unittest.TestCase):
@@ -49,27 +56,27 @@ class TestPostData(unittest.TestCase):
         heart_beat.app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
         heart_beat.app.config['TESTING'] = True
         self.app = heart_beat.app.test_client()
-        heart_beat.init_db()
+        heart_beat.setup_db()
 
     def tearDown(self):
-        heart_beat.tear_down_db()
+        heart_beat.teardown_db()
 
-    def test_ping_post_valid_data():
+    def test_ping_post_valid_data(self):
         pass
 
-    def test_ping_post_mismatched_tool_version_data():
+    def test_ping_post_mismatched_tool_version_data(self):
         pass
 
-    def test_ping_post_non_epoch_time_client_start():
+    def test_ping_post_non_epoch_time_client_start(self):
         pass
 
-    def test_ping_post_non_epoch_time_logset_gather():
+    def test_ping_post_non_epoch_time_logset_gather(self):
         pass
 
-    def test_ping_post_esrs_enabled_not_bool():
+    def test_ping_post_esrs_enabled_not_bool(self):
         pass
 
-    def test_ping_post_sr_number_not_integer():
+    def test_ping_post_sr_number_not_integer(self):
         pass
 
 class TestDBOperations(unittest.TestCase):
@@ -81,10 +88,10 @@ class TestDBOperations(unittest.TestCase):
         heart_beat.app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
         heart_beat.app.config['TESTING'] = True
         self.app = heart_beat.app.test_client()
-        heart_beat.init_db()
+        heart_beat.setup_db()
 
     def tearDown(self):
-        heart_beat.tear_down_db()
+        heart_beat.teardown_db()
     
     def test_valid_dict_insertion(self):
         pass
