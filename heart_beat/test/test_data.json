@@ -1,0 +1,8 @@
+{
+    "client_start_time":"1429572087",
+    "logset_gather_time":"1429572066",
+    "onefs_version":"7.2.0.0",
+    "esrs_enabled":"False",
+    "tool_version":"0.0.0.1",
+    "sr_number":"12345678910"
+}
