@@ -1,0 +1,6 @@
+[MASTER]
+# SQLAlchemy members which will be reported as errors to be ignored.
+generated-members=commit,query,add,delete,Column,Integer,DateTime,func,String,Boolean
+
+[REPORTS]
+reports=no
