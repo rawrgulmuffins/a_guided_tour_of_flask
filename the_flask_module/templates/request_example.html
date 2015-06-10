@@ -1,0 +1,90 @@
+{#- One thing to note is that the request object is available in templates by default -#}
+<body>
+  <div>
+    <p>
+      <strong>What's the full url path?</strong>
+      {{request.url}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>What's the request endpoint?</strong>
+      {{request.endpoint}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>What module is processing this code?</strong>
+      {{request.module}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>What's the url path?</strong>
+      {{request.path}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>What method was used?</strong>
+      {{request.method}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>is this an ajax call?</strong>
+      {{request.is_xhr}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>Is there form date?</strong>
+      {{request.form}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>was there any url arguments?</strong>
+      {{request.args}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>Are there any cookies?</strong>
+      {{request.cookies}}
+    </p>
+  </div>
+  <div>
+    <P>
+      <strong>What are the headers?</strong>
+      <div>
+        <em>{{request.headers}}</em>
+      </div>
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>If this is a post what data was sent?</strong>
+      {{request.data}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>if the content type is json what json data was passed?</strong>
+      {{request.json}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>If this request is a POST or PUT request what files came with it?</strong>
+      {{request.data}}
+    </p>
+  </div>
+  <div>
+    <p>
+      <strong>What are the WSGI environment variables?</strong>
+      {{request.data}}
+    </p>
+  </div>
+
+</body>
