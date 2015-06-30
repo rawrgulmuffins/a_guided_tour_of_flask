@@ -19,7 +19,7 @@ setup(name="flask_brownbag",
       include_package_data=True,
       install_requires=["setuptools", "pip", "SQLAlchemy", "flask",
           "flask_sqlalchemy", "ipython", "pyzmq", "jinja2", "tornado",
-          "jsonschema"],
+          "jsonschema", "terminado"],
       tests_require=tests_require,  # Testing, external due to Travis
       test_suite="heart_beat.test",
       classifiers=[
