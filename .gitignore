@@ -58,3 +58,7 @@ target/
 
 # IPython ignores
 .ipynb_checkpoints
+
+# SSL ignores
+ssl.key
+ssl.cert
