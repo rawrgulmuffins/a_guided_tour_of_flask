@@ -9,7 +9,7 @@ Running The Notebook
 * git clone git@github.west.isilon.com:alord/flask_brownbag.git
 * cd flask_brownbag
 # You might have to sudo the next command if you're using the system python.
-* pip install -e . # This will take 3-4 minutes.
+* pip3 install -e . # This will take 3-4 minutes.
 * ipython notebook # This will open a web browser with the notebook directory available to you.
 
 If you don't want to have to use sudo
