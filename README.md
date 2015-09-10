@@ -1,4 +1,4 @@
-flask_brownbag
+What Even is This Thing?
 ==============
 
 This is a IPython notebook and example project dedicated to teaching what `Flask` is and how to use it.
